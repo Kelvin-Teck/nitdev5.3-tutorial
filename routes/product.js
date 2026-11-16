@@ -26,7 +26,7 @@ const products = [
   },
   {
     id: 2,
-    name: "Classic Leather Backpack",
+    name: "Classic nylon Backpack",
     slug: "classic-leather-backpack",
     description:
       "A stylish and durable leather backpack suitable for work, school, and travel.",
