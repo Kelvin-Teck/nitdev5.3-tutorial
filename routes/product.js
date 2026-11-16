@@ -177,6 +177,16 @@ const logger = (req, res, next) => {
 
 
 
+router.get("/products/featured", logger, (req, res) => {
+  const featuredProducts = products.filter((product) => product.isFeatured);
+
+  return res.json({
+    message: "Featured products retrieved successfully",
+    featuredProducts,
+  });
+});
+
+
 router.get("/products", logger, (req, res) => {
   const { category } = req.query;
 
