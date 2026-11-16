@@ -9,7 +9,7 @@ const products = [
     name: "Wireless Bluetooth Headphones",
     slug: "wireless-bluetooth-headphones",
     description:
-      "Premium wireless headphones with noise cancellation and crystal-clear sound.",
+      "Premium wired headphones with noise cancellation and crystal-clear sound.",
     price: 85000,
     discountPrice: 69999,
     category: "Electronics",
