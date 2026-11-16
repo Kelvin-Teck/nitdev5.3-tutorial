@@ -230,8 +230,6 @@ router.patch("/product/:id", (req, res) => {
 
   const findProduct = products.findIndex((p)=> p.id == id)
 
-  
-
   const updatedProduct = { ...products[findProduct], stock }
 
   products[findProduct] =  updatedProduct
@@ -239,7 +237,7 @@ router.patch("/product/:id", (req, res) => {
   
 
 
-  return res.status(201).json({message: "product updated", products})
+  return res.status(201).json({message: "product has been updated", products})
 
 })
 
