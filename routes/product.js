@@ -258,7 +258,7 @@ router.delete("/product/:id", (req, res) => {
   
   const deletedProduct = products.filter(p => p.id != parseInt(id));
 
-  return res.status(201).json({message: "product deleted successfully", deletedProduct})
+  return res.status(201).json({message: "product successfully deleted", deletedProduct})
 })
 
 
