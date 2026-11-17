@@ -237,7 +237,7 @@ router.patch("/product/:id", (req, res) => {
   
 
 
-  return res.status(201).json({message: "product has been updated", products})
+  return res.status(201).json({message: "product is updated", products})
 
 })
 
