@@ -1,25 +1,21 @@
 const express = require('express')
 const router = require("./routes/product.js")
-const {Sequelize} = require('sequelize')
+const sequelize =  require('./config/db.js')
 
 const app = express()
 
 app.use(express.json())
 
-const sequelize = new Sequelize('nitdev-5.3', 'postgres', '1234567890', {
-  host: 'localhost',
-    dialect: "postgres",
-  port: 5433
-});
 
 
-app.use("/api/abc", router)
+app.use("/api/", router)
 
 
 
 app.listen(5000, async () => {  
     try {
         await sequelize.authenticate();
+        await sequelize.sync({alter: true})
         console.log(`Database connection established successfully`)
         
     } catch (err) {

@@ -1,7 +1,7 @@
 const express = require('express')
 
 const router = express.Router();
-
+const Product =  require('../models/product')
 
 const products = [
   {
@@ -208,7 +208,7 @@ router.get("/products", logger, (req, res) => {
 router.get("/product/:id", (req, res) => {
   const { id } = req.params;
 
-  const foundProduct = products.find((product) => product.id == id);
+  const foundProduct = Product.findAll()
 
   return res.json({ message: "The product found successfully", foundProduct });
 });
@@ -223,14 +223,24 @@ router.get("/product/:id", (req, res) => {
 })
 
 
-router.post("/add-product", (req, res) => {
-  const newProduct = req.body;
+router.post("/add-product", async (req, res) => {
+  try {
+    const newProduct = req.body;
 
-  const allProducts = [...products, newProduct];
+    const product = await Product.create(newProduct);
 
-  return res
-    .status(201)
-    .json({ message: "Products retrieved successfuly", allProducts });
+    return res.status(201).json({
+      message: "Product created successfully",
+      product,
+    });
+  } catch (error) {
+    console.error("Error creating product:", error);
+
+    return res.status(500).json({
+      message: "Unable to create product",
+      error: error.message,
+    });
+  }
 });
 
 
