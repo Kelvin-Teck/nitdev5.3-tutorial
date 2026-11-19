@@ -1,7 +1,6 @@
-const express = require('express')
+const express = require("express");
 
 const router = express.Router();
-
 
 const products = [
   {
@@ -167,15 +166,11 @@ const products = [
   },
 ];
 
-
-
 const logger = (req, res, next) => {
   console.log(`${req.method} --- ${req.url} ---- ${new Date()}`);
 
   next();
 };
-
-
 
 router.get("/products/featured", logger, (req, res) => {
   const featuredProducts = products.filter((product) => product.isFeatured);
@@ -185,7 +180,6 @@ router.get("/products/featured", logger, (req, res) => {
     featuredProducts,
   });
 });
-
 
 router.get("/products", logger, (req, res) => {
   const { category } = req.query;
@@ -204,7 +198,6 @@ router.get("/products", logger, (req, res) => {
   return res.json({ message: "products retrieved successfully", products });
 });
 
-
 router.get("/product/:id", (req, res) => {
   const { id } = req.params;
 
@@ -213,15 +206,13 @@ router.get("/product/:id", (req, res) => {
   return res.json({ message: "The product found successfully", foundProduct });
 });
 
-
 router.get("/product/:id", (req, res) => {
-    const { id } = req.params
-    
-    const foundProduct = products.find((product) => product.id == id);
+  const { id } = req.params;
 
-    return res.json({message: "The product found successfully", foundProduct})
-})
+  const foundProduct = products.find((product) => product.id == id);
 
+  return res.json({ message: "The product found successfully", foundProduct });
+});
 
 router.post("/add-product", (req, res) => {
   const newProduct = req.body;
@@ -233,37 +224,29 @@ router.post("/add-product", (req, res) => {
     .json({ message: "Products retrieved successfuly", allProducts });
 });
 
-
 router.patch("/product/:id", (req, res) => {
   const { id } = req.params;
   const { stock } = req.body;
 
-  const findProduct = products.findIndex((p)=> p.id == id)
+  const findProduct = products.findIndex((p) => p.id == id);
 
-  const updatedProduct = { ...products[findProduct], stock }
+  const updatedProduct = { ...products[findProduct], stock };
 
-  products[findProduct] =  updatedProduct
-  
-  
+  products[findProduct] = updatedProduct;
 
-
-  return res.status(201).json({message: "product has been updated", products})
-
-})
-
-
+  return res
+    .status(201)
+    .json({ message: "product has been updated", products });
+});
 
 router.delete("/product/:id", (req, res) => {
-  const { id } = req.params
-  
-  const deletedProduct = products.filter(p => p.id != parseInt(id));
+  const { id } = req.params;
 
-  return res.status(201).json({message: "product deleted successfully", deletedProduct})
-})
+  const deletedProduct = products.filter((p) => p.id != parseInt(id));
 
+  return res
+    .status(201)
+    .json({ message: "product successfully deleted", deletedProduct });
+});
 
-
-
-
-
-module.exports = router
+module.exports = router;
