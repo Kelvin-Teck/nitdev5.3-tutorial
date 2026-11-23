@@ -187,30 +187,44 @@ router.get("/products/featured", logger, (req, res) => {
 });
 
 
-router.get("/products", logger, (req, res) => {
-  const { category } = req.query;
+router.get("/products", logger, async (req, res) => {
+  try {
+    const { category } = req.query;
 
-  if (category) {
-    const productCategory = products.filter(
-      (product) => product.category == category,
-    );
+    if (category) {
+      const productCategory = await Product.findAll({ where: { category: category } })
 
-    return res.json({
-      message: `Products with ${category} retrieved successfully`,
-      productCategory,
-    });
+      return res.json({
+        message: `Products with ${category} retrieved successfully`,
+        productCategory,
+      });
+    }
+    
+      const products = await Product.findAll();
+
+      return res.json({ message: "products retrieved successfully", products });
+    
+  } catch (error) {
+    return res.status(500).json({ message: "error retrieving products" + error.message });
+    
   }
 
-  return res.json({ message: "products retrieved successfully", products });
 });
 
 
-router.get("/product/:id", (req, res) => {
-  const { id } = req.params;
+router.get("/product/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
 
-  const foundProduct = Product.findAll()
+    const foundProduct = await Product.findOne({where: {id: id}})
+console.log(foundProduct)
+    return res.status(200).json({ message: "The product found successfully", foundProduct });
+  } catch (error) {
+    return res.status(500).json({
+      message: "there was not error" + error.message
+    });
+  }
 
-  return res.json({ message: "The product found successfully", foundProduct });
 });
 
 

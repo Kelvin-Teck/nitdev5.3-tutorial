@@ -10,6 +10,7 @@ const Product = sequelize.define("Products", {
   name: {
     type: DataTypes.STRING,
     allowNull: false,
+
   },
   slug: {
     type: DataTypes.STRING,
@@ -76,4 +77,4 @@ const Product = sequelize.define("Products", {
 });
 
 
-module.exports =  Product
+module.exports =  Product 
