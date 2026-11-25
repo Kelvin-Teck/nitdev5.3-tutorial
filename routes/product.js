@@ -1,4 +1,4 @@
-const express = require('express')
+const express = require("express");
 
 const router = express.Router();
 const Product = require("../models/products");
@@ -167,15 +167,11 @@ const products = [
   },
 ];
 
-
-
 const logger = (req, res, next) => {
   console.log(`${req.method} --- ${req.url} ---- ${new Date()}`);
 
   next();
 };
-
-
 
 router.get("/products/featured", logger, (req, res) => {
   const featuredProducts = products.filter((product) => product.isFeatured);
@@ -186,47 +182,46 @@ router.get("/products/featured", logger, (req, res) => {
   });
 });
 
-
 router.get("/products", logger, async (req, res) => {
   try {
     const { category } = req.query;
 
     if (category) {
-      const productCategory = await Product.findAll({ where: { category: category } })
+      const productCategory = await Product.findAll({
+        where: { category: category },
+      });
 
       return res.json({
         message: `Products with ${category} retrieved successfully`,
         productCategory,
       });
     }
-    
-      const products = await Product.findAll();
 
-      return res.json({ message: "products retrieved successfully", products });
-    
+    const products = await Product.findAll();
+
+    return res.json({ message: "products retrieved successfully", products });
   } catch (error) {
-    return res.status(500).json({ message: "error retrieving products" + error.message });
-    
+    return res
+      .status(500)
+      .json({ message: "error retrieving products" + error.message });
   }
-
 });
-
 
 router.get("/product/:id", async (req, res) => {
   try {
     const { id } = req.params;
 
-    const foundProduct = await Product.findOne({where: {id: id}})
-console.log(foundProduct)
-    return res.status(200).json({ message: "The product found successfully", foundProduct });
+    const foundProduct = await Product.findOne({ where: { id: id } });
+    console.log(foundProduct);
+    return res
+      .status(200)
+      .json({ message: "The product found successfully", foundProduct });
   } catch (error) {
     return res.status(500).json({
-      message: "there was not error" + error.message
+      message: "there was not error" + error.message,
     });
   }
-
 });
-
 
 router.post("/add-product", async (req, res) => {
   try {
@@ -248,37 +243,29 @@ router.post("/add-product", async (req, res) => {
   }
 });
 
-
 router.patch("/product/:id", (req, res) => {
   const { id } = req.params;
   const { stock } = req.body;
 
-  const findProduct = products.findIndex((p)=> p.id == id)
+  const findProduct = products.findIndex((p) => p.id == id);
 
-  const updatedProduct = { ...products[findProduct], stock }
+  const updatedProduct = { ...products[findProduct], stock };
 
-  products[findProduct] =  updatedProduct
-  
-  
+  products[findProduct] = updatedProduct;
 
-
-  return res.status(201).json({message: "product has been updated", products})
-
-})
-
-
+  return res
+    .status(201)
+    .json({ message: "product has been updated", products });
+});
 
 router.delete("/product/:id", (req, res) => {
-  const { id } = req.params
-  
-  const deletedProduct = products.filter(p => p.id != parseInt(id));
+  const { id } = req.params;
 
-  return res.status(201).json({message: "product successfully deleted", deletedProduct})
-})
+  const deletedProduct = products.filter((p) => p.id != parseInt(id));
 
+  return res
+    .status(201)
+    .json({ message: "product successfully deleted", deletedProduct });
+});
 
-
-
-
-
-module.exports = router
+module.exports = router;
