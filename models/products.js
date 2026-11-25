@@ -1,6 +1,8 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/db.js");
 
+// database ORM Model
+// Defines SQL table schema and column data types
 const Product = sequelize.define("Product", {
   name: {
     type: DataTypes.STRING,
@@ -13,7 +15,6 @@ const Product = sequelize.define("Product", {
   },
   description: {
     type: DataTypes.TEXT,
-    allowNull: true,
   },
   price: {
     type: DataTypes.INTEGER,
