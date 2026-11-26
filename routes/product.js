@@ -173,13 +173,21 @@ const logger = (req, res, next) => {
   next();
 };
 
-router.get("/products/featured", logger, (req, res) => {
-  const featuredProducts = products.filter((product) => product.isFeatured);
+router.get("/products/featured", logger, async (req, res) => {
+  try {
+    const featuredProducts = await Product.findAll({
+      where: { isFeatured: true },
+    });
 
-  return res.json({
-    message: "Featured products retrieved successfully",
-    featuredProducts,
-  });
+    return res.json({
+      message: "Featured products retrieved successfully",
+      featuredProducts,
+    });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: "error retrieving featured products" + error.message });
+  }
 });
 
 router.get("/products", logger, async (req, res) => {
