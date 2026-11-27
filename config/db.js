@@ -1,4 +1,4 @@
-const {Sequelize} = require('sequelize')
+const { Sequelize } = require("sequelize");
 
 const sequelize = new Sequelize("nitdev-5.3", "postgres", "1234567890", {
   host: "localhost",
@@ -6,5 +6,4 @@ const sequelize = new Sequelize("nitdev-5.3", "postgres", "1234567890", {
   port: 5433,
 });
 
-
-module.exports =  sequelize
+module.exports = sequelize;
