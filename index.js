@@ -1,5 +1,6 @@
 const express = require('express')
-const router = require("./routes/product.js")
+const productRouter = require("./routes/product.js")
+const userRouter = require("./routes/user.js")
 const sequelize =  require('./config/db.js')
 
 const app = express()
@@ -8,14 +9,14 @@ app.use(express.json())
 
 
 
-app.use("/api/", router)
-
+app.use("/api/", productRouter)
+app.use("/api/", userRouter)
 
 
 app.listen(5000, async () => {  
     try {
         await sequelize.authenticate();
-        await sequelize.sync({alter: true})
+        await sequelize.sync()
         console.log(`Database connection established successfully`)
         
     } catch (err) {

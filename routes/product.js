@@ -177,8 +177,8 @@ const logger = (req, res, next) => {
 
 
 
-router.get("/products/featured", logger, (req, res) => {
-  const featuredProducts = products.filter((product) => product.isFeatured);
+router.get("/products/featured", logger, async  (req, res) => {
+  const featuredProducts = await Product.findAll({where: {isFeatured: true}})
 
   return res.json({
     message: "Featured products retrieved successfully",
